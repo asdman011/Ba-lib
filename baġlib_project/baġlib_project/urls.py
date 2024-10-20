@@ -23,6 +23,7 @@ from .views import index
 
 urlpatterns = [
     path('', index, name='index'),
+    path('signup/', index),
     path('login/', index, name='login'),
     path('dashboard/', index, name='dashboard'),
     # Add more paths if necessary
