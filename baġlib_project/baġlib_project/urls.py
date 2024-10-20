@@ -18,6 +18,16 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
+from core.views import index
+
+urlpatterns = [
+    path('', index, name='index'),
+    path('signup/', index),
+    path('login/', index, name='login'),
+    path('dashboard/', index, name='dashboard'),
+    # Add more paths if necessary
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
