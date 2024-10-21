@@ -143,6 +143,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../frontend/build/static'),
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Keep Django's default authentication
+    'allauth.account.auth_backends.AuthenticationBackend',  # Add allauth
+)
+
+
 # Serving React's index.html as a template
 TEMPLATES = [
     {
