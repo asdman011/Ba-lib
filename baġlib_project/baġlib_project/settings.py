@@ -136,6 +136,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
+SITE_ID = 1
+
 # Add the React static build folder to Django's STATICFILES_DIRS
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../frontend/build/static'),
