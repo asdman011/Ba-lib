@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from core.views import index
+from core import views as core_views
 
 urlpatterns = [
     path('', index, name='index'),
@@ -28,6 +29,8 @@ urlpatterns = [
     path('dashboard/', index, name='dashboard'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for OAuth
+    path('profile/', core_views.profile, name='profile'),
+
     # Add more paths if necessary
 ]
 
