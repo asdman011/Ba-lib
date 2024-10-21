@@ -132,7 +132,7 @@ STATIC_URL = '/static/'
 
 # Add the React static build folder to Django's STATICFILES_DIRS
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/build/static'),
+    os.path.join(BASE_DIR, '../frontend/build/static'),
 ]
 
 # Serving React's index.html as a template
