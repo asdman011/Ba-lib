@@ -10,3 +10,6 @@ def profile(request):
     else:
         form = ProfileForm(instance=request.user)
     return render(request, 'profile.html', {'form': form})
+
+def index(request):
+    return render(request, 'index.html')
