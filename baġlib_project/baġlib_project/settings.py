@@ -155,7 +155,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/baġlib_project/core/templates',  # Path to your templates
+            'D:/Cources/Projects/Baġlib/repo/Baglib/baġlib_project/core/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -168,9 +168,10 @@ TEMPLATES = [
         },
     },
 ]
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 STATICFILES_DIRS = [
-    '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static',
+    'D:/Cources/Projects/Baġlib/repo/Baglib/baġlib_project/core/templates',
 ]
 
 # Static files settings
