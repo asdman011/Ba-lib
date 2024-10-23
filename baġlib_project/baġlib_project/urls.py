@@ -14,31 +14,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
-from core.views import index
-from core import views as core_views
+from django.views.generic import TemplateView
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+from core import views as core_views  # Import views from core
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('signup/', index),
-    path('login/', index, name='login'),
-    path('dashboard/', index, name='dashboard'),
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),  # Include allauth URLs for OAuth
-    path('profile/', core_views.profile, name='profile'),
-
-    # Add more paths if necessary
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('signup/', core_views.index, name='signup'),
+    path('profile/', core_views.index, name='profile'),  # Route for profile
+    path('dashboard/', core_views.index, name='dashboard'),
+    re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),  # Catch-all route
 ]
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    # your other routes
-] 
-
 # Serve media files during development
-if settings.DEBUG:
+if settings.DEBUG:  # Only serve static files in debug mode
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

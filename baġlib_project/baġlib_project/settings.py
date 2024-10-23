@@ -139,10 +139,6 @@ STATIC_URL = '/static/'
 
 SITE_ID = 1
 
-# Add the React static build folder to Django's STATICFILES_DIRS
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '../frontend/build/static'),
-]
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # Keep Django's default authentication
@@ -153,15 +149,15 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = 'core.User'
 
+DEBUG = True
 
-# Serving React's index.html as a template
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/build'),
-            os.path.join(BASE_DIR, 'templates'),  # Add this line if using project-level templates
-        ],        'APP_DIRS': True,
+            '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/baġlib_project/core/templates',  # Path to your templates
+        ],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -172,3 +168,17 @@ TEMPLATES = [
         },
     },
 ]
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+STATICFILES_DIRS = [
+    '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static',
+]
+
+# Static files settings
+STATIC_URL = '/static/'  # URL to access static files
+
+# Static root (only necessary for production)
+STATIC_ROOT = '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static/staticfiles'
+
+# Serving media files (optional)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static/media'
