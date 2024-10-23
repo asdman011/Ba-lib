@@ -6,7 +6,7 @@ def profile(request):
         form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('index')
     else:
         form = ProfileForm(instance=request.user)
-    return render(request, 'profile.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
