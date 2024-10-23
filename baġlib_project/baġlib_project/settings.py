@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(r'D:\Cources\Projects\Baġlib\repo\Baglib')
 
 
 # Quick-start development settings - unsuitable for production
@@ -151,11 +151,18 @@ AUTH_USER_MODEL = 'core.User'
 
 DEBUG = True
 
+BASE_DIR = Path(r'D:\Cources\Projects\Baġlib\repo\Baglib')
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'frontend' / 'build' / 'static',
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'D:/Cources/Projects/Baġlib/repo/Baglib/baġlib_project/core/templates'
+            'D:/Cources/Projects/Baġlib/repo/Baglib/baġlib_project/core/templates',
+            BASE_DIR / 'templates' / 'frontend' / 'build',  # Updated path
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -169,17 +176,8 @@ TEMPLATES = [
     },
 ]
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-STATICFILES_DIRS = [
-    'D:/Cources/Projects/Baġlib/repo/Baglib/baġlib_project/core/templates',
-]
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Static files settings
-STATIC_URL = '/static/'  # URL to access static files
-
-# Static root (only necessary for production)
-STATIC_ROOT = '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static/staticfiles'
-
-# Serving media files (optional)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static/media'
+MEDIA_ROOT = BASE_DIR / 'media'

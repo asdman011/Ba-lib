@@ -2,7 +2,7 @@ import os
 from django.conf import settings
 from django.shortcuts import render, redirect
 from .forms import ProfileForm
-from django.http import HttpResponse
+# from django.http import HttpResponse
 def profile(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user)
@@ -16,4 +16,4 @@ def profile(request):
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("React app should load here!")
+    return render(request, os.path.join('index.html'))
