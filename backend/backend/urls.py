@@ -28,5 +28,6 @@ urlpatterns = [
     path('', index, name='index'),
     path('login/', index, name='login'),
     path('dashboard/', index, name='dashboard'),
+    path('signup/', index),   
     # Add more paths if necessary
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
