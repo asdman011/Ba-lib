@@ -15,15 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from core.views import index
+from core.views import serve_react
 from core import views as core_views
 
 urlpatterns = [
     path('profile/', core_views.profile, name='profile'),
     path('admin/', admin.site.urls),
+    re_path(r"^(?P<path>.*)$", serve_react, {"document_root": settings.REACT_APP_BUILD_PATH}),    
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for OAuth
     path('', index, name='index'),
     path('login/', index, name='login'),
