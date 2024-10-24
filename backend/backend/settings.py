@@ -74,7 +74,8 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build',
+                 ],  # Add the path to your frontend templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
