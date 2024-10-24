@@ -22,6 +22,7 @@ from core.views import index
 from core import views as core_views
 
 urlpatterns = [
+    path('profile/', core_views.profile, name='profile'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for OAuth
     path('', index, name='index'),
