@@ -28,6 +28,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Keep Django's default authentication
+    'allauth.account.auth_backends.AuthenticationBackend',  # Add allauth
+)
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 
@@ -46,6 +53,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',  # Add any other OAuth provider you want (e.g., Facebook, GitHub)
     'crispy_forms',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
