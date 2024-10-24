@@ -36,7 +36,7 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 REACT_APP_BUILD_PATH =  os.path.join(BASE_DIR, "frontend/build")
-STATIC_URL = 'django_static/'
+STATIC_URL =  os.path.join(BASE_DIR, "backend/backend/static")
 
 # Application definition
 STATICFILES_DIRS = [
@@ -80,7 +80,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ '/mnt/d/Cources/Projects/Baġlib/repo/Baglib/backend/core/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
