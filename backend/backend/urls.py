@@ -19,7 +19,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from core.views import index, profile
-
+from core import views as core_views
 
 urlpatterns = [
     path('profile/', profile, name='profile'),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('', index, name='index'),
     path('login/', index, name='login'),
     path('dashboard/', index, name='dashboard'),
-    path('signup/', index),   
-    # Add more paths if necessary
+    path('signup/', index),
+    path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
+    path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
