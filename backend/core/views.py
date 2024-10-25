@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import ProfileForm
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-@login_required
+
 def profile(request):
     if not request.user.is_authenticated:
         return render(request, 'not_logged_in.html')
@@ -20,3 +19,6 @@ def profile(request):
 
 def index(request):
     return render(request, 'index.html')
+
+def not_logged_in(request):
+    return render(request, 'not_logged_in.html')

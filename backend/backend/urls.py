@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import index
-from core import views as core_views
+from core.views import index, profile
+
 
 urlpatterns = [
-    path('profile/', core_views.profile, name='profile'),
+    path('profile/', profile, name='profile'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for OAuth
     path('', index, name='index'),
