@@ -45,7 +45,7 @@ class Folder(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    is_public = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=False)  # Controls if folder is public or private
 
     def __str__(self):
         return f"{self.user.username} - {self.name}"
