@@ -34,4 +34,5 @@ urlpatterns = [
     path('folders/create/', core_views.create_folder, name='create_folder'),
     path('folders/my/', core_views.my_folders, name='my_folders'),
     path('folders/public/', core_views.public_folders, name='public_folders'),
+    path('profiles/public/', core_views.public_profiles, name='public_profiles'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
