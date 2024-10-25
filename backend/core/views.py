@@ -1,7 +1,43 @@
 from django.shortcuts import render, redirect
 from .forms import ProfileForm
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from .models import Book, ReadingProgress
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
+@login_required
+@require_http_methods(["POST"])
+def update_reading_progress(request, book_id):
+    book = Book.objects.get(id=book_id)
+    progress, created = ReadingProgress.objects.get_or_create(user=request.user, book=book)
+
+    current_page = request.POST.get('current_page')
+    if current_page and current_page.isdigit():
+        progress.current_page = int(current_page)
+        progress.update_streak()  # Update streak logic
+        progress.save()
+        return JsonResponse({
+            'status': 'success',
+            'current_page': progress.current_page,
+            'streak_count': progress.streak_count,
+            'last_read_date': progress.last_read_date,
+        })
+    return JsonResponse({'status': 'error', 'message': 'Invalid page number'})
+
+@login_required
+def get_reading_progress(request, book_id):
+    try:
+        book = Book.objects.get(id=book_id)
+        progress = ReadingProgress.objects.get(user=request.user, book=book)
+        return JsonResponse({
+            'current_page': progress.current_page,
+            'streak_count': progress.streak_count,
+            'last_read_date': progress.last_read_date,
+        })
+    except ReadingProgress.DoesNotExist:
+        return JsonResponse({'error': 'Progress not found'}, status=404)
 
 def profile(request):
     if not request.user.is_authenticated:
