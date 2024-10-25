@@ -31,4 +31,7 @@ urlpatterns = [
     path('signup/', index),
     path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
     path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),
+    path('folders/create/', core_views.create_folder, name='create_folder'),
+    path('folders/my/', core_views.my_folders, name='my_folders'),
+    path('folders/public/', core_views.public_folders, name='public_folders'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
