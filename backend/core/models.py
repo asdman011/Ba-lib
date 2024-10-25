@@ -2,6 +2,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
+from datetime import timedelta
 
 class User(AbstractUser):
     bio = models.TextField(blank=True)
@@ -23,7 +25,20 @@ class ReadingProgress(models.Model):
     last_read_date = models.DateTimeField(auto_now=True)
     streak_count = models.IntegerField(default=0)
 
-    def __str__(self):
+    def update_streak(self):
+        # Check if the last read date was yesterday to continue the streak
+        today = timezone.now().date()
+        if self.last_read_date.date() == today - timedelta(days=1):
+            self.streak_count += 1
+        elif self.last_read_date.date() < today - timedelta(days=1):
+            # If it’s been more than a day since last read, reset streak
+            self.streak_count = 1
+        else:
+            self.streak_count = max(1, self.streak_count)
+        self.last_read_date = timezone.now()
+        self.save()
+
+    def __str__(self): #don't know if this is necessary
         return f"{self.user.username} - {self.book.title}"
 
 class Folder(models.Model):
