@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join('/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static'),  # Adjust the path to your React build directory
+    os.path.join('/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build'), # Add the path to your frontend build directory (to include manifest.json)  
 ]
 # Directory where collectstatic will collect static files for production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
