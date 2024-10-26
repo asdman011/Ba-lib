@@ -8,3 +8,4 @@ __pycache__/
 
 # username/password database
 backend\db.sqlite3
+backend/db.sqlite3
