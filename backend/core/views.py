@@ -6,6 +6,41 @@ from .models import Book, ReadingProgress
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Folder
+from .forms import FolderForm
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+
+
+@login_required
+def create_folder(request):
+    if request.method == 'POST':
+        form = FolderForm(request.POST)
+        if form.is_valid():
+            folder = form.save(commit=False)
+            folder.user = request.user
+            folder.save()
+            messages.success(request, 'Folder created successfully!')
+            return redirect('my_folders')
+    else:
+        form = FolderForm()
+    return render(request, 'create_folder.html', {'form': form})
+
+@login_required
+def my_folders(request):
+    folders = Folder.objects.filter(user=request.user)
+    return render(request, 'my_folders.html', {'folders': folders})
+
+def public_folders(request):
+    folders = Folder.objects.filter(is_public=True)
+    return render(request, 'public_folders.html', {'folders': folders})
+
+def public_profiles(request):
+    User = get_user_model()
+    users_with_public_folders = User.objects.filter(folder__is_public=True).distinct()
+    return render(request, 'public_profiles.html', {'users': users_with_public_folders})
 
 @login_required
 @require_http_methods(["POST"])
