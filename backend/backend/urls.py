@@ -34,6 +34,7 @@ urlpatterns = [
     path('folders/', core_views.folder_list, name='folder_list'),  # Django views for folders
 
     # Django views
+    path('books/<int:book_id>/', core_views.book_detail, name='book_detail'),
     path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
     path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),
     path('folders/create/', core_views.create_folder, name='create_folder'),

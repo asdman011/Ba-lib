@@ -38,6 +38,12 @@ def create_folder(request):
     return render(request, 'create_folder.html', {'form': form})
 
 @login_required
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    pages_left = book.total_pages - book.current_page
+    return render(request, 'book_detail.html', {'book': book, 'pages_left': pages_left})
+
+@login_required
 def my_folders(request):
     folders = Folder.objects.filter(user=request.user)
     return render(request, 'my_folders.html', {'folders': folders})

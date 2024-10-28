@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ book.title }}</h2>
+<img src="{{ book.cover.url }}" alt="{{ book.title }} Cover" />
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>Pages Left:</strong> {{ pages_left }}</p>
+<p><strong>Comments:</strong> {{ book.comment }}</p>
+<form method="POST" action="{% url 'update_reading_progress' book.id %}">
+    {% csrf_token %}
+    <label for="pages_read">Pages read today:</label>
+    <input type="number" id="pages_read" name="pages_read" min="1" max="{{ pages_left }}">
+    <button type="submit">Update Progress</button>
+</form>
+{% endblock %}
