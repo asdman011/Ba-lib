@@ -1,15 +1,12 @@
 from django.shortcuts import render, redirect
-from .forms import ProfileForm
+from .forms import FolderForm, ProfileForm, BookForm
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from .models import Book, ReadingProgress
+from .models import Book, ReadingProgress, Folder
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Folder
-from .forms import FolderForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 
@@ -88,8 +85,18 @@ def profile(request):
     
     return render(request, 'profile.html', {'form': form})
 
+def create_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = BookForm()
+    return render(request, 'create_book.html', {'form': form})
+
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html')  # This serves React's index.html
 
 def not_logged_in(request):
     return render(request, 'not_logged_in.html')
