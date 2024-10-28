@@ -10,7 +10,15 @@ from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
 
+def user_profile(request, user_id):
+    User = get_user_model()
+    user = get_object_or_404(User, id=user_id)
+    
+    # Check if the current user is viewing their own profile
+    is_owner = user == request.user
+    return render(request, 'user_profile.html', {'user': user, 'is_owner': is_owner})
 
 
 @login_required
