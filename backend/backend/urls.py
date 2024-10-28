@@ -14,30 +14,35 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# backend/urls.py
+
 import os
 from django.contrib import admin
-from django.urls import include, path, re_path
+from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import index, profile
 from core import views as core_views
 
+
 urlpatterns = [
-    path('profile/', profile, name='profile'),
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),  # Include allauth URLs for OAuth
-    path('', index, name='index'),
+    path('accounts/', include('allauth.urls')),
+    path('', core_views.index, name='index'),  # Main index
+    path('dashboard/', core_views.index, name='dashboard'),  # Renders React's index.html for dashboard
+    path('books/', core_views.book_list, name='book_list'),  # Django views for books
+    path('folders/', core_views.folder_list, name='folder_list'),  # Django views for folders
+
+    # Django views
     path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
     path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),
     path('folders/create/', core_views.create_folder, name='create_folder'),
     path('folders/my/', core_views.my_folders, name='my_folders'),
     path('folders/public/', core_views.public_folders, name='public_folders'),
     path('profiles/public/', core_views.public_profiles, name='public_profiles'),
-    re_path(r'^.*$', core_views.index),  # Catch-all route for React
-
 ]
 
-# Static files serving for development mode
+# Serve static files on dashboard route in development
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static("/", document_root=os.path.join('/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build'))
+    urlpatterns += static("/dashboard/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
+    urlpatterns += static("/dashboard/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))

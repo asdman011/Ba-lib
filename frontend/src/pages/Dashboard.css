@@ -7,54 +7,50 @@
     font-family: Arial, sans-serif;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
+h1, h2 {
     color: #4CAF50;
+    text-align: center;
 }
 
-.dashboard-section {
-    margin-bottom: 30px;
+.streak, .folder-section {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-h2 {
+.folder-section h2 {
+    font-size: 1.5rem;
     color: #333;
-    margin-bottom: 10px;
 }
 
-/* Grid layout for books and folders */
 .items-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
 }
 
-/* Individual item card */
-.item-card {
+.book-card {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    font-size: 16px;
-    color: #333;
 }
 
-/* Streak section */
-.streaks {
-    text-align: center;
-    font-size: 18px;
-    color: #555;
+.book-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
-/* Responsive adjustments */
+input[type="number"] {
+    width: 80px;
+    margin-right: 5px;
+}
+
 @media (max-width: 768px) {
     .items-grid {
         grid-template-columns: 1fr;
-    }
-
-    h1, h2 {
-        font-size: 1.5em;
     }
 }

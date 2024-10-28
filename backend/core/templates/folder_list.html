@@ -1,0 +1,12 @@
+<!-- backend/core/templates/folder_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>My Folders</h2>
+<ul>
+    {% for folder in folders %}
+        <li>{{ folder.name }} - {% if folder.is_public %}Public{% else %}Private{% endif %}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_folder' %}">Create a New Folder</a>
+{% endblock %}

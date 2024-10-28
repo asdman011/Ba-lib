@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.shortcuts import render, redirect
 from .forms import FolderForm, ProfileForm, BookForm
 from django.contrib.auth.models import User
@@ -10,6 +11,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 
+
+
+@login_required
+def book_list(request):
+    books = Book.objects.filter(folder__user=request.user)
+    return render(request, 'book_list.html', {'books': books})
+
+@login_required
+def folder_list(request):
+    folders = Folder.objects.filter(user=request.user)
+    return render(request, 'folder_list.html', {'folders': folders})
 
 @login_required
 def create_folder(request):
@@ -40,23 +52,40 @@ def public_profiles(request):
     return render(request, 'public_profiles.html', {'users': users_with_public_folders})
 
 @login_required
+def add_book(request):
+    form = BookForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        book = form.save()
+        return redirect('dashboard')  # Assuming a dashboard view
+    return render(request, 'add_book.html', {'form': form})
+
+
+@login_required
 @require_http_methods(["POST"])
 def update_reading_progress(request, book_id):
-    book = Book.objects.get(id=book_id)
-    progress, created = ReadingProgress.objects.get_or_create(user=request.user, book=book)
+    book = get_object_or_404(Book, id=book_id)
+    pages_read = int(request.POST.get('pages_read', 0))
+    book.current_page += pages_read
+    if book.current_page >= book.total_pages:
+        book.current_page = book.total_pages
+        book.is_read = True
+    book.save()
 
-    current_page = request.POST.get('current_page')
-    if current_page and current_page.isdigit():
-        progress.current_page = int(current_page)
-        progress.update_streak()  # Update streak logic
-        progress.save()
-        return JsonResponse({
-            'status': 'success',
-            'current_page': progress.current_page,
-            'streak_count': progress.streak_count,
-            'last_read_date': progress.last_read_date,
-        })
-    return JsonResponse({'status': 'error', 'message': 'Invalid page number'})
+    # Update streak for folder
+    folder = book.folder
+    today = timezone.now().date()
+    if folder.last_read_date == today - timedelta(days=1):
+        folder.streak_count += 1
+    elif folder.last_read_date != today:
+        folder.streak_count = 1
+    folder.last_read_date = today
+    folder.save()
+
+    # Update general reading streak
+    progress, _ = ReadingProgress.objects.get_or_create(user=request.user)
+    progress.update_general_streak()
+
+    return redirect('dashboard')
 
 @login_required
 def get_reading_progress(request, book_id):
@@ -84,16 +113,6 @@ def profile(request):
         form = ProfileForm(instance=request.user)
     
     return render(request, 'profile.html', {'form': form})
-
-def create_book(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = BookForm()
-    return render(request, 'create_book.html', {'form': form})
 
 def index(request):
     return render(request, 'index.html')  # This serves React's index.html
