@@ -44,6 +44,13 @@ def book_detail(request, book_id):
     return render(request, 'book_detail.html', {'book': book, 'pages_left': pages_left})
 
 @login_required
+def folder_detail(request, folder_id):
+    folder = get_object_or_404(Folder, id=folder_id, user=request.user)
+    books = folder.books.all()  # Access related books using the `related_name` defined in the Book model
+    return render(request, 'folder_detail.html', {'folder': folder, 'books': books})
+
+
+@login_required
 def my_folders(request):
     folders = Folder.objects.filter(user=request.user)
     return render(request, 'my_folders.html', {'folders': folders})

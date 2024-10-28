@@ -5,7 +5,10 @@
 <h2>My Folders</h2>
 <ul>
     {% for folder in folders %}
-        <li>{{ folder.name }} - {% if folder.is_public %}Public{% else %}Private{% endif %}</li>
+        <li>
+            <a href="{% url 'folder_detail' folder.id %}">{{ folder.name }}</a> - 
+            {% if folder.is_public %}Public{% else %}Private{% endif %}
+        </li>
     {% endfor %}
 </ul>
 <a href="{% url 'create_folder' %}">Create a New Folder</a>

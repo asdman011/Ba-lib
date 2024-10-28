@@ -37,6 +37,7 @@ urlpatterns = [
     path('books/<int:book_id>/', core_views.book_detail, name='book_detail'),
     path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
     path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),
+    path('folders/<int:folder_id>/', core_views.folder_detail, name='folder_detail'),
     path('folders/create/', core_views.create_folder, name='create_folder'),
     path('folders/my/', core_views.my_folders, name='my_folders'),
     path('folders/public/', core_views.public_folders, name='public_folders'),
