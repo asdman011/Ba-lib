@@ -11,13 +11,20 @@ class User(AbstractUser):
     pass
 
 class Book(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
-    total_pages = models.IntegerField()
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
+    published_date = models.DateField(default='2000-01-01')  # Define a default value
+    current_page = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
 
+    def __str__(self):
+        return self.title
+
+class Streak(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    streak_days = models.IntegerField(default=0)
 class ReadingProgress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)

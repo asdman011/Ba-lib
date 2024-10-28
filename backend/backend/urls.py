@@ -16,7 +16,7 @@ Including another URLconf
 """
 import os
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from core.views import index, profile
@@ -27,15 +27,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for OAuth
     path('', index, name='index'),
-    path('login/', index, name='login'),
-    path('dashboard/', index, name='dashboard'),
-    path('signup/', index),
     path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
     path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),
     path('folders/create/', core_views.create_folder, name='create_folder'),
     path('folders/my/', core_views.my_folders, name='my_folders'),
     path('folders/public/', core_views.public_folders, name='public_folders'),
     path('profiles/public/', core_views.public_profiles, name='public_profiles'),
+    re_path(r'^.*$', core_views.index),  # Catch-all route for React
+
 ]
 
 # Static files serving for development mode
