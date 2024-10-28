@@ -96,6 +96,9 @@ TEMPLATES = [
 ]
 
 
+ACCOUNT_FORMS = {
+    'signup': 'core.forms.CustomSignupForm',
+}
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
