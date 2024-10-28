@@ -30,6 +30,7 @@ urlpatterns = [
     path('', core_views.index, name='index'),  # Main index
     path('dashboard/', core_views.index, name='dashboard'),  # Renders React's index.html for dashboard
     path('books/', core_views.book_list, name='book_list'),  # Django views for books
+    path('books/add/', core_views.add_book, name='add_book'),
     path('folders/', core_views.folder_list, name='folder_list'),  # Django views for folders
 
     # Django views
@@ -43,6 +44,7 @@ urlpatterns = [
 
 # Serve static files on dashboard route in development
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static("/dashboard/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
     urlpatterns += static("/dashboard/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))
+    urlpatterns += static("/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
+    urlpatterns += static("/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))
