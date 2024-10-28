@@ -1,48 +1,55 @@
 // frontend/src/pages/Dashboard.js
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Dashboard.css';
 
-const Dashboard = () => {
-    // Placeholder data
-    const [books, setBooks] = useState([
-        { id: 1, title: "Book 1" },
-        { id: 2, title: "Book 2" }
-    ]);
+const Dashboard = ({ ReadingProgress = { general_streak: 0 }, folders = [] }) => {
+    const handlePageRead = (bookId, pagesRead) => {
+        // fetch(`/books/${bookId}/progress/update/`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'X-CSRFToken': getCookie('csrftoken') // Ensure CSRF token is available
+        //     },
+        //     body: JSON.stringify({ pages_read: pagesRead })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.status === 'success') {
+        //         console.log('Progress updated successfully');
+        //     } else {
+        //         console.error('Error updating progress:', data.message);
+        //     }
+        // })
+        // .catch(error => console.error('Error:', error));
+    };
     
-    const [folders, setFolders] = useState([
-        { id: 1, name: "Folder 1" },
-        { id: 2, name: "Folder 2" }
-    ]);
-
-    const [streak, setStreak] = useState(10);  // Placeholder streak
 
     return (
         <div className="dashboard">
             <h1>Welcome to Your Dashboard</h1>
-
-            <section className="dashboard-section books">
-                <h2>Your Books</h2>
-                <div className="items-grid">
-                    {books.map(book => (
-                        <div className="item-card" key={book.id}>{book.title}</div>
+            <section className="streak">
+                <h2>General Reading Streak: {ReadingProgress.general_streak}</h2>
+            </section>
+            {folders.map(folder => (
+                <div key={folder.id} className="folder-section">
+                    <h2>{folder.name} (Streak: {folder.streak_count} days)</h2>
+                    {folder.books.map(book => (
+                        <div key={book.id} className="book-card">
+                            <img src={book.cover} alt={book.title} />
+                            <h3>{book.title}</h3>
+                            <p>Pages left: {book.pages_left}</p>
+                            <p>{book.is_read ? 'Read' : 'In Progress'}</p>
+                            {!book.is_read && (
+                                <form onSubmit={() => handlePageRead(book.id)}>
+                                    <input type="number" name="pages_read" placeholder="Pages read today" />
+                                    <button type="submit">Update Progress</button>
+                                </form>
+                            )}
+                        </div>
                     ))}
                 </div>
-            </section>
-
-            <section className="dashboard-section folders">
-                <h2>Your Folders</h2>
-                <div className="items-grid">
-                    {folders.map(folder => (
-                        <div className="item-card" key={folder.id}>{folder.name}</div>
-                    ))}
-                </div>
-            </section>
-
-            <section className="dashboard-section streaks">
-                <h2>Reading Streak</h2>
-                <p>You have a {streak}-day streak! Keep it up!</p>
-            </section>
+            ))}
         </div>
     );
 };

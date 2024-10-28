@@ -19,9 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join('/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build/static'),  # React static assets
-    os.path.join('/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build'),         # Root build directory (manifest.json)
-    os.path.join('/mnt/d/Cources/Projects/Baġlib/repo/Baglib/backend/core/static'),    # Django app-specific static files
+    os.path.join(BASE_DIR, 'frontend/build/static'),  # Points to React build's static directory
+    os.path.join(BASE_DIR, 'frontend/build'),         # For manifest.json and other files in root build
 ]
 # Directory where collectstatic will collect static files for production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

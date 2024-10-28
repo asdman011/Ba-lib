@@ -4,9 +4,7 @@
 <h2>Public Folders</h2>
 <ul>
     {% for folder in folders %}
-        <li>
-            {{ folder.name }} by {{ folder.user.username }}
-        </li>
+        <li><a href="{% url 'folder_detail' folder.id %}">{{ folder.name }}</a> by {{ folder.user.username }}</li>
     {% endfor %}
 </ul>
 {% endblock %}
