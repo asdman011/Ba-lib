@@ -82,6 +82,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['/mnt/d/Cources/Projects/Baġlib/repo/Baglib/frontend/build',
+                  os.path.join(BASE_DIR, 'backend/core/templates'), 
                  ],  # Add the path to your frontend templates
         'APP_DIRS': True,
         'OPTIONS': {

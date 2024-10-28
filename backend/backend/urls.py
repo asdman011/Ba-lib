@@ -32,6 +32,7 @@ urlpatterns = [
     path('books/', core_views.book_list, name='book_list'),  # Django views for books
     path('books/add/', core_views.add_book, name='add_book'),
     path('folders/', core_views.folder_list, name='folder_list'),  # Django views for folders
+    path('profile/', core_views.profile, name='profile'),
 
     # Django views
     path('books/<int:book_id>/', core_views.book_detail, name='book_detail'),
