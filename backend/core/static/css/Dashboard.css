@@ -1,4 +1,4 @@
-/* frontend/src/pages/Dashboard.css
+/* frontend/src/pages/Dashboard.css */
 
 .dashboard {
     padding: 20px;
@@ -55,4 +55,12 @@ input[type="number"] {
     }
 }
 
- */
+/* Footer styles */
+footer {
+    background-color: #2eb36593;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}

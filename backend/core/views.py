@@ -20,7 +20,16 @@ def user_profile(request, user_id):
     is_owner = user == request.user
     return render(request, 'user_profile.html', {'user': user, 'is_owner': is_owner})
 
-
+@login_required
+def dashboard(request):
+    reading_progress, _ = ReadingProgress.objects.get_or_create(user=request.user)
+    folders = Folder.objects.filter(user=request.user).prefetch_related('books')  # Load folders and related books
+    
+    return render(request, 'dashboard.html', {
+        'reading_progress': reading_progress,
+        'folders': folders
+    })
+    
 @login_required
 def book_list(request):
     books = Book.objects.filter(folder__user=request.user)
