@@ -23,20 +23,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from core import views as core_views
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', core_views.index, name='index'),  # Main index
-    path('dashboard/', core_views.index, name='dashboard'),  # Renders React's index.html for dashboard
+    path('', core_views.index, name='index'),  # Main index page
+    path('dashboard/', core_views.dashboard, name='dashboard'),  # Dashboard view
     path('books/', core_views.book_list, name='book_list'),  # Django views for books
     path('books/add/', core_views.add_book, name='add_book'),
-    path('folders/', core_views.folder_list, name='folder_list'),  # Django views for folders
+    path('folders/', core_views.folder_list, name='folder_list'),
     path('profile/', core_views.profile, name='profile'),
-        path('user/<int:user_id>/', core_views.user_profile, name='user_profile'),  # New route for viewing other profiles
+    path('user/<int:user_id>/', core_views.user_profile, name='user_profile'),
 
-
-    # Django views
+    # Additional views
     path('books/<int:book_id>/', core_views.book_detail, name='book_detail'),
     path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
     path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),
@@ -47,11 +45,11 @@ urlpatterns = [
     path('profiles/public/', core_views.public_profiles, name='public_profiles'),
 ]
 
-# Serve static files on dashboard route in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static("/dashboard/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
-    urlpatterns += static("/dashboard/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))
-    urlpatterns += static("/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
-    urlpatterns += static("/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))
+
+    # urlpatterns += static("/dashboard/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
+    # urlpatterns += static("/dashboard/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))
+    # urlpatterns += static("/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
+    # urlpatterns += static("/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))
