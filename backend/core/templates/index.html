@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baġlib</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'folder_list' %}">Folders</a>
+            <a href="{% url 'book_list' %}">Books</a>
+            <a href="{% url 'account_email' %}">My Account</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>Welcome to Baġlib</h1>
+            <p>Your personalized reading journey starts here.</p>
+            <a href="{% url 'dashboard' %}" class="cta-button">Get Started</a>
+        </section>
+        
+        <section class="about">
+            <h2>About Baġlib</h2>
+            <p>Baġlib is an interactive platform designed for book lovers to track, share, and immerse in a personalized reading experience. Whether you're organizing your digital bookshelf or maintaining your reading streaks, Baġlib has you covered.</p>
+        </section>
+
+        <section class="features">
+            <h2>Features</h2>
+            <div class="feature">
+                <h3>Track Your Books</h3>
+                <p>Organize books into folders, track progress, and view detailed stats.</p>
+            </div>
+            <div class="feature">
+                <h3>Share with the Community</h3>
+                <p>Engage with other readers by sharing your public folders and profiles.</p>
+            </div>
+            <div class="feature">
+                <h3>Maintain Reading Streaks</h3>
+                <p>Stay motivated with personal and folder-specific reading streaks.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Baġlib. All rights reserved.</p>
+    </footer>
+
+    {% comment %} <script src="{% static 'js/index.js' %}"></script> {% endcomment %}
+</body>
+</html>

@@ -3,6 +3,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h2>Select Folder View</h2>
+<div>
+    <a href="{% url 'my_folders' %}">My Folders</a>
+</div>
+<div>
+    <a href="{% url 'public_folders' %}">Public Folders</a>
+</div>
+
 <h3>Public Folders</h3>
 <ul>
     {% for folder in folders %}
