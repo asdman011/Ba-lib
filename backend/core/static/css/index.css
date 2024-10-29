@@ -102,6 +102,29 @@ header nav a:hover {
     width: 280px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.hero {
+    background-color: #f0f8ff;
+    padding: 50px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.cta-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #45a049;
+}
 
 .feature h3 {
     color: #333;
