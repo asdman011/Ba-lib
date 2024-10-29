@@ -5,19 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>
+    <title>Baġlib</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'main.css' %}"> <!-- Add this line for React CSS -->
 </head>
 <body>
+
     <header>
-        <h1>Folders</h1>
         <nav>
-            <a href="{% url 'public_profiles' %}">Public Profiles</a> |
-            <a href="{% url 'public_folders' %}">Public Folders</a> |
-            <a href="{% url 'my_folders' %}">My Folders</a>
+            <a href="/">Home</a> <!-- Add this line for React homepage -->
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/folders">Folders</a>
+            <a href="/books">Books</a>
+            <a href="/accounts/email">My Account</a>  <!-- for all other pages it work fine except from homepage -->
+            
         </nav>
     </header>
+
     <main>
         {% block content %}{% endblock %}
     </main>

@@ -32,6 +32,9 @@ urlpatterns = [
     path('books/', core_views.book_list, name='book_list'),  # Django views for books
     path('books/add/', core_views.add_book, name='add_book'),
     path('folders/', core_views.folder_list, name='folder_list'),  # Django views for folders
+    path('profile/', core_views.profile, name='profile'),
+        path('user/<int:user_id>/', core_views.user_profile, name='user_profile'),  # New route for viewing other profiles
+
 
     # Django views
     path('books/<int:book_id>/', core_views.book_detail, name='book_detail'),
@@ -46,6 +49,8 @@ urlpatterns = [
 
 # Serve static files on dashboard route in development
 if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static("/dashboard/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))
     urlpatterns += static("/dashboard/manifest.json", document_root=os.path.join(settings.BASE_DIR, "frontend/build"))
     urlpatterns += static("/static/", document_root=os.path.join(settings.BASE_DIR, "frontend/build/static"))

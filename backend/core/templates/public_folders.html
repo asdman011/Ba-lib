@@ -1,10 +1,15 @@
+<!-- public_folders.html -->
+
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Public Folders</h2>
+<h3>Public Folders</h3>
 <ul>
     {% for folder in folders %}
-        <li><a href="{% url 'folder_detail' folder.id %}">{{ folder.name }}</a> by {{ folder.user.username }}</li>
+        <li>
+            <a href="{% url 'folder_detail' folder.id %}">{{ folder.name }}</a> by 
+            <a href="{% url 'user_profile' folder.user.id %}">{{ folder.user.username }}</a>
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}

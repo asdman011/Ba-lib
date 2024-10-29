@@ -1,8 +1,18 @@
 <!-- backend/core/templates/folder_list.html -->
+<title>Folders</title>
+
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>My Folders</h2>
+
+<h2>Select Folder View</h2>
+<div>
+    <a href="{% url 'my_folders' %}">My Folders</a>
+</div>
+<div>
+    <a href="{% url 'public_folders' %}">Public Folders</a>
+</div>
+<h3>My Folders</h3>
 <ul>
     {% for folder in folders %}
         <li>
