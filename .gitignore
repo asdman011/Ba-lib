@@ -8,3 +8,5 @@ __pycache__/
 
 # username/password database
 db.sqlite3
+
+media/
