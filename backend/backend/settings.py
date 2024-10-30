@@ -55,9 +55,9 @@ TEMPLATES = [
 SECRET_KEY = 'django-insecure-2onz97%488n7jprof7c1kndf0dl#9(-!f8-0ix!&(r$w+qt)u+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # Keep Django's default authentication
