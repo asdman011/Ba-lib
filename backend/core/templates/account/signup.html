@@ -1,9 +1,11 @@
 <!-- templates/account/signup.html -->
-<title>Sign Up</title>
-
+{% extends '../base.html' %}
 {% load i18n %}
 {% load static %}
 
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
 <h2>Sign Up</h2>
 
 <!-- Display form errors, including custom validation messages -->
@@ -27,3 +29,4 @@
 <!-- Third-party authentication options -->
 <p>Or use a third-party</p>
 {% include "socialaccount/snippets/provider_list.html" %}
+{% endblock %}

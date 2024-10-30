@@ -2,8 +2,21 @@ from django import forms
 from .models import User  # Import your custom User model
 from django import forms
 from .models import Book, Folder
-from allauth.account.forms import SignupForm
+from allauth.account.forms import SignupForm, LoginForm, AddEmailForm
 from django import forms
+
+
+
+# class CustomEmailForm(AddEmailForm):
+#     error_messages = {
+#         'email_required': 'Please enter a valid email address.',
+#     }
+
+#     def clean_email(self):
+#         email = self.cleaned_data.get('email')
+#         if not email:
+#             raise forms.ValidationError(self.error_messages['email_required'])
+#         return email
 
 class CustomSignupForm(SignupForm):
     def clean_password1(self):
@@ -22,6 +35,19 @@ class CustomSignupForm(SignupForm):
         user = super(CustomSignupForm, self).save(request)
         return user
 
+
+# class CustomLoginForm(LoginForm):
+#     error_messages = {
+#         'username_password_mismatch': 'The username and/or password you specified are not correct.'
+#     }
+
+#     def clean(self):
+#         super().clean()
+#         if self.errors:
+#             raise forms.ValidationError(self.error_messages['username_password_mismatch'])
+#         return self.cleaned_data
+
+
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
@@ -31,7 +57,7 @@ class BookForm(forms.ModelForm):
             'author': forms.TextInput(attrs={'placeholder': 'Author'}),
             'comment': forms.Textarea(attrs={'placeholder': 'Add a comment...'}),
         }
-
+    
 class FolderForm(forms.ModelForm):
     class Meta:
         model = Folder

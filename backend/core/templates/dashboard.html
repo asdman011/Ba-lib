@@ -1,0 +1,60 @@
+<!-- backend/core/templates/dashboard.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+
+<div class="dashboard">
+    <h1>Welcome to Your Dashboard</h1>
+    <section class="streak">
+        <h2>General Reading Streak: {{ reading_progress.general_streak }}</h2>
+    </section>
+    
+    {% for folder in folders %}
+    <div class="folder-section">
+        <h2>
+            <a href="{% url 'folder_detail' folder.id %}">
+                {{ folder.name }}
+            </a> 
+            (Streak: {{ folder.streak_count }} days)
+        </h2>
+        <div class="items-grid">
+            {% for book in folder.books.all %}
+            <div class="book-card">
+                {% if book.cover %}
+                <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                {% else %}
+                <img src="{% static 'images/default_cover.jpg' %}" alt="Default Cover">
+                {% endif %}
+                
+                <h3>
+                    <a href="{% url 'book_detail' book.id %}">
+                        {{ book.title }}
+                    </a>
+                </h3>
+                
+                <p>Pages left: {{ book.pages_left }}</p>
+                
+                {% if book.is_read %}
+                    <p>Read</p>
+                {% else %}
+                    <p>In Progress</p>
+                {% endif %}
+                
+                {% if not book.is_read %}
+                <form action="{% url 'update_reading_progress' book.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="number" name="pages_read" placeholder="Pages read today">
+                    <button type="submit">Update Progress</button>
+                </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
