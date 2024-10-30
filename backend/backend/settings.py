@@ -104,6 +104,8 @@ ROOT_URLCONF = 'backend.urls'
 
 
 ACCOUNT_FORMS = {
+    # 'login': 'core.forms.CustomLoginForm',
+    # 'add_email': 'core.forms.CustomEmailForm',
     'signup': 'core.forms.CustomSignupForm',
 }
 
@@ -154,8 +156,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-import os
 
 
 
