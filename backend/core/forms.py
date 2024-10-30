@@ -22,6 +22,7 @@ class CustomSignupForm(SignupForm):
         user = super(CustomSignupForm, self).save(request)
         return user
 
+
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
@@ -31,7 +32,8 @@ class BookForm(forms.ModelForm):
             'author': forms.TextInput(attrs={'placeholder': 'Author'}),
             'comment': forms.Textarea(attrs={'placeholder': 'Add a comment...'}),
         }
-
+    
+    cover = forms.ImageField(required=True)  # Makes cover field required
 class FolderForm(forms.ModelForm):
     class Meta:
         model = Folder

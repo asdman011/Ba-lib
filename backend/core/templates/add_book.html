@@ -1,18 +1,13 @@
 <!-- backend/core/templates/add_book.html -->
 <title>Add Books</title>
-
 {% extends 'base.html' %}
 {% load static %}
-
-
 {% block content %}
 <h2>Add a New Book</h2>
-
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Add Book</button>
 </form>
-
 <a href="{% url 'dashboard' %}">Back to Dashboard</a>
 {% endblock %}
