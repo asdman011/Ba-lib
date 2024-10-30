@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
+from django.db.models import Prefetch
 
 def user_profile(request, user_id):
     User = get_user_model()
@@ -87,10 +88,21 @@ def public_folders(request):
     folders = Folder.objects.filter(is_public=True)
     return render(request, 'public_folders.html', {'folders': folders})
 
+
 def public_profiles(request):
     User = get_user_model()
     users_with_public_folders = User.objects.filter(folder__is_public=True).distinct()
-    return render(request, 'public_profiles.html', {'users': users_with_public_folders})
+
+    users_data = []
+    for user in users_with_public_folders:
+        reading_progress = ReadingProgress.objects.filter(user=user).first()
+        general_streak = reading_progress.general_streak if reading_progress else 0
+        # Debugging log
+        print(f"User: {user.username}, General Streak: {general_streak}")
+        users_data.append({'user': user, 'general_streak': general_streak})
+
+    return render(request, 'public_profiles.html', {'users_data': users_data})
+
 
 @login_required
 def add_book(request):
