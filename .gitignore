@@ -8,7 +8,7 @@ __pycache__/
 
 # username/password database
 db.sqlite3
-frontend (Untracked)/
+frontend_(Untracked)/
 media/
 backend/core/templates/account/email_untracked.html
 backend/core/templates/account/login_untracked.html
