@@ -33,7 +33,6 @@ class BookForm(forms.ModelForm):
             'comment': forms.Textarea(attrs={'placeholder': 'Add a comment...'}),
         }
     
-    cover = forms.ImageField(required=True)  # Makes cover field required
 class FolderForm(forms.ModelForm):
     class Meta:
         model = Folder
