@@ -7,7 +7,6 @@ __pycache__/
 *$py.class
 
 # username/password database
-db.sqlite3
 frontend_(Untracked)/
 media/
 backend/core/templates/account/email_untracked.html
