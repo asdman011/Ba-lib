@@ -94,10 +94,22 @@ def public_profiles(request):
 
 @login_required
 def add_book(request):
+    # Get folders owned by the logged-in user
+    user_folders = Folder.objects.filter(user=request.user)
+
+    if not user_folders.exists():
+        # Set a message to inform the user
+        messages.info(request, "You need to create a folder before adding a book.")
+        return render(request, 'add_book.html', {'form': None})  # No form to display if no folders
+
+    # Limit the form's folder choices to the current user's folders
     form = BookForm(request.POST or None, request.FILES or None)
+    form.fields['folder'].queryset = user_folders
+
     if form.is_valid():
         book = form.save()
         return redirect('dashboard')  # Assuming a dashboard view
+
     return render(request, 'add_book.html', {'form': form})
 
 
