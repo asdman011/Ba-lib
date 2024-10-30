@@ -55,7 +55,7 @@ TEMPLATES = [
 SECRET_KEY = 'django-insecure-2onz97%488n7jprof7c1kndf0dl#9(-!f8-0ix!&(r$w+qt)u+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
