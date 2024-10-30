@@ -15,16 +15,27 @@
     
     {% for folder in folders %}
     <div class="folder-section">
-        <h2>{{ folder.name }} (Streak: {{ folder.streak_count }} days)</h2>
+        <h2>
+            <a href="{% url 'folder_detail' folder.id %}">
+                {{ folder.name }}
+            </a> 
+            (Streak: {{ folder.streak_count }} days)
+        </h2>
         <div class="items-grid">
-            {% for book in folder.books.all %} <!-- Add `.all` here -->
+            {% for book in folder.books.all %}
             <div class="book-card">
                 {% if book.cover %}
                 <img src="{{ book.cover.url }}" alt="{{ book.title }}">
                 {% else %}
-                <img src="{% static 'images/default_cover.jpg' %}" alt="Default Cover"> <!-- Optional default cover -->
+                <img src="{% static 'images/default_cover.jpg' %}" alt="Default Cover">
                 {% endif %}
-                            <h3>{{ book.title }}</h3>
+                
+                <h3>
+                    <a href="{% url 'book_detail' book.id %}">
+                        {{ book.title }}
+                    </a>
+                </h3>
+                
                 <p>Pages left: {{ book.pages_left }}</p>
                 
                 {% if book.is_read %}
