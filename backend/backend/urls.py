@@ -35,6 +35,10 @@ urlpatterns = [
     path('user/<int:user_id>/', core_views.user_profile, name='user_profile'),
 
     # Additional views
+    path('books/<int:book_id>/edit/', core_views.edit_book, name='edit_book'),
+    path('books/<int:book_id>/delete/', core_views.delete_book, name='delete_book'),
+    path('folders/<int:folder_id>/edit/', core_views.edit_folder, name='edit_folder'),
+    path('folders/<int:folder_id>/delete/', core_views.delete_folder, name='delete_folder'),
     path('books/<int:book_id>/', core_views.book_detail, name='book_detail'),
     path('books/<int:book_id>/progress/', core_views.get_reading_progress, name='get_reading_progress'),
     path('books/<int:book_id>/progress/update/', core_views.update_reading_progress, name='update_reading_progress'),

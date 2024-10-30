@@ -43,6 +43,42 @@ def folder_list(request):
     return render(request, 'folder_list.html', {'folders': folders})
 
 @login_required
+def edit_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id, folder__user=request.user)
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book_detail', book_id=book.id)
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'edit_book.html', {'form': form})
+
+@login_required
+def delete_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id, folder__user=request.user)
+    book.delete()
+    return redirect('dashboard')
+
+@login_required
+def edit_folder(request, folder_id):
+    folder = get_object_or_404(Folder, id=folder_id, user=request.user)
+    if request.method == 'POST':
+        form = FolderForm(request.POST, instance=folder)
+        if form.is_valid():
+            form.save()
+            return redirect('folder_detail', folder_id=folder.id)
+    else:
+        form = FolderForm(instance=folder)
+    return render(request, 'edit_folder.html', {'form': form})
+
+@login_required
+def delete_folder(request, folder_id):
+    folder = get_object_or_404(Folder, id=folder_id, user=request.user)
+    folder.delete()
+    return redirect('my_folders')
+
+@login_required
 def create_folder(request):
     if request.method == 'POST':
         form = FolderForm(request.POST)
