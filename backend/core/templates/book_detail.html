@@ -1,10 +1,17 @@
 <title>Readings</title>
 
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <h2>{{ book.title }}</h2>
-<img src="{{ book.cover.url }}" alt="{{ book.title }} Cover" />
+
+{% if book.cover %}
+    <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+{% else %}
+    <img src="{% static 'images/default_cover.jpg' %}" alt="Default Cover" style="width: 200px; height: auto;"> <!-- Optional default cover -->
+{% endif %}
+
 <p><strong>Author:</strong> {{ book.author }}</p>
 <p><strong>Pages Left:</strong> {{ pages_left }}</p>
 <p><strong>Comments:</strong> {{ book.comment }}</p>
