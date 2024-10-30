@@ -11,6 +11,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
+from django.http import Http404
 
 def user_profile(request, user_id):
     User = get_user_model()
@@ -60,12 +61,22 @@ def book_detail(request, book_id):
     pages_left = book.total_pages - book.current_page
     return render(request, 'book_detail.html', {'book': book, 'pages_left': pages_left})
 
+
 @login_required
 def folder_detail(request, folder_id):
-    folder = get_object_or_404(Folder, id=folder_id, user=request.user)
-    books = folder.books.all()  # Access related books using the `related_name` defined in the Book model
-    return render(request, 'folder_detail.html', {'folder': folder, 'books': books})
-
+    try:
+        # First, get the folder. Check if it's either public or belongs to the user
+        folder = Folder.objects.get(id=folder_id)
+        
+        if not folder.is_public and folder.user != request.user:
+            raise PermissionDenied("You do not have permission to view this folder.")
+        
+        # Load books related to the folder
+        books = folder.books.all()
+        return render(request, 'folder_detail.html', {'folder': folder, 'books': books})
+    
+    except Folder.DoesNotExist:
+        raise Http404("No Folder matches the given query.")
 
 @login_required
 def my_folders(request):
@@ -90,10 +101,19 @@ def add_book(request):
     return render(request, 'add_book.html', {'form': form})
 
 
+from django.core.exceptions import PermissionDenied
+
 @login_required
 @require_http_methods(["POST"])
 def update_reading_progress(request, book_id):
+    # Get the book and ensure it exists
     book = get_object_or_404(Book, id=book_id)
+    
+    # Check if the logged-in user is the owner of the folder that contains the book
+    if book.folder.user != request.user:
+        raise PermissionDenied("You do not have permission to update this book's progress.")
+    
+    # Proceed with updating the reading progress only if the user is the owner
     pages_read = int(request.POST.get('pages_read', 0))
     book.current_page += pages_read
     if book.current_page >= book.total_pages:
@@ -101,7 +121,7 @@ def update_reading_progress(request, book_id):
         book.is_read = True
     book.save()
 
-    # Update streak for folder
+    # Update the streak for the folder
     folder = book.folder
     today = timezone.now().date()
     if folder.last_read_date == today - timedelta(days=1):
@@ -111,11 +131,12 @@ def update_reading_progress(request, book_id):
     folder.last_read_date = today
     folder.save()
 
-    # Update general reading streak
+    # Update the general reading streak for the user
     progress, _ = ReadingProgress.objects.get_or_create(user=request.user)
     progress.update_general_streak()
 
     return redirect('dashboard')
+
 
 @login_required
 def get_reading_progress(request, book_id):

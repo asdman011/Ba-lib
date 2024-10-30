@@ -9,16 +9,21 @@
 {% if book.cover %}
     <img src="{{ book.cover.url }}" alt="{{ book.title }}">
 {% else %}
-    <img src="{% static 'images/default_cover.jpg' %}" alt="Default Cover" style="width: 200px; height: auto;"> <!-- Optional default cover -->
+    <img src="{% static 'images/default_cover.jpg' %}" alt="Default Cover" style="width: 200px; height: auto;">
 {% endif %}
 
 <p><strong>Author:</strong> {{ book.author }}</p>
 <p><strong>Pages Left:</strong> {{ pages_left }}</p>
 <p><strong>Comments:</strong> {{ book.comment }}</p>
-<form method="POST" action="{% url 'update_reading_progress' book.id %}">
-    {% csrf_token %}
-    <label for="pages_read">Pages read today:</label>
-    <input type="number" id="pages_read" name="pages_read" min="1" max="{{ pages_left }}">
-    <button type="submit">Update Progress</button>
-</form>
+
+{% if request.user == book.folder.user %}
+    <!-- Only display the form if the logged-in user is the owner of the book's folder -->
+    <form method="POST" action="{% url 'update_reading_progress' book.id %}">
+        {% csrf_token %}
+        <label for="pages_read">Pages read today:</label>
+        <input type="number" id="pages_read" name="pages_read" min="1" max="{{ pages_left }}">
+        <button type="submit">Update Progress</button>
+    </form>
+{% else %}
+{% endif %}
 {% endblock %}
