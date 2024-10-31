@@ -57,7 +57,13 @@ class BookForm(forms.ModelForm):
             'author': forms.TextInput(attrs={'placeholder': 'Author'}),
             'comment': forms.Textarea(attrs={'placeholder': 'Add a comment...'}),
         }
-    
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(BookForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['folder'].queryset = Folder.objects.filter(user=user)
+
 class FolderForm(forms.ModelForm):
     class Meta:
         model = Folder

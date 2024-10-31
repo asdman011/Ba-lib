@@ -17,7 +17,7 @@ from django.db.models import Prefetch
 def user_profile(request, user_id):
     User = get_user_model()
     user = get_object_or_404(User, id=user_id)
-    
+
     # Check if the current user is viewing their own profile
     is_owner = user == request.user
     return render(request, 'user_profile.html', {'user': user, 'is_owner': is_owner})
@@ -26,12 +26,12 @@ def user_profile(request, user_id):
 def dashboard(request):
     reading_progress, _ = ReadingProgress.objects.get_or_create(user=request.user)
     folders = Folder.objects.filter(user=request.user).prefetch_related('books')  # Load folders and related books
-    
+
     return render(request, 'dashboard.html', {
         'reading_progress': reading_progress,
         'folders': folders
     })
-    
+
 @login_required
 def book_list(request):
     books = Book.objects.filter(folder__user=request.user)
@@ -45,13 +45,12 @@ def folder_list(request):
 @login_required
 def edit_book(request, book_id):
     book = get_object_or_404(Book, id=book_id, folder__user=request.user)
-    if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES, instance=book)
-        if form.is_valid():
-            form.save()
-            return redirect('book_detail', book_id=book.id)
-    else:
-        form = BookForm(instance=book)
+    form = BookForm(request.POST or None, request.FILES or None, instance=book, user=request.user)
+
+    if form.is_valid():
+        form.save()
+        return redirect('book_detail', book_id=book.id)
+
     return render(request, 'edit_book.html', {'form': form})
 
 @login_required
@@ -104,14 +103,14 @@ def folder_detail(request, folder_id):
     try:
         # First, get the folder. Check if it's either public or belongs to the user
         folder = Folder.objects.get(id=folder_id)
-        
+
         if not folder.is_public and folder.user != request.user:
             raise PermissionDenied("You do not have permission to view this folder.")
-        
+
         # Load books related to the folder
         books = folder.books.all()
         return render(request, 'folder_detail.html', {'folder': folder, 'books': books})
-    
+
     except Folder.DoesNotExist:
         raise Http404("No Folder matches the given query.")
 
@@ -168,11 +167,11 @@ from django.core.exceptions import PermissionDenied
 def update_reading_progress(request, book_id):
     # Get the book and ensure it exists
     book = get_object_or_404(Book, id=book_id)
-    
+
     # Check if the logged-in user is the owner of the folder that contains the book
     if book.folder.user != request.user:
         raise PermissionDenied("You do not have permission to update this book's progress.")
-    
+
     # Proceed with updating the reading progress only if the user is the owner
     pages_read = int(request.POST.get('pages_read', 0))
     book.current_page += pages_read
@@ -214,7 +213,7 @@ def get_reading_progress(request, book_id):
 def profile(request):
     if not request.user.is_authenticated:
         return render(request, 'not_logged_in.html')
-    
+
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
@@ -222,7 +221,7 @@ def profile(request):
             return redirect('profile')
     else:
         form = ProfileForm(instance=request.user)
-    
+
     return render(request, 'profile.html', {'form': form})
 
 def index(request):
