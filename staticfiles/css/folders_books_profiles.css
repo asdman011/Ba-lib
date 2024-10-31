@@ -1,0 +1,36 @@
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+ul li a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+ul li a:hover {
+    color: #333;
+}
+
+a.button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #4CAF50;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+a.button:hover {
+    background-color: #45a049;
+}
