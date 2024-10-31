@@ -20,32 +20,34 @@
     </header>
     
     <main>
-        <section class="hero" style="background: url('{% static 'images/hero-background.jpg' %}') no-repeat center center/cover;">
-            <h1>Welcome to Baġlib</h1>
-            <p>Your personalized reading journey starts here.</p>
-            <a href="{% url 'dashboard' %}" class="cta-button">Get Started</a>
-        </section>
-        
-        <section class="about">
-            <h2>About Baġlib</h2>
-            <p>Baġlib is an interactive platform designed for book lovers to track, share, and immerse in a personalized reading experience. Whether you're organizing your digital bookshelf or maintaining your reading streaks, Baġlib has you covered.</p>
-        </section>
+        <div class="container">
+            <section class="hero" style="background: url('{% static 'images/hero-background.jpg' %}') no-repeat center center/cover;">
+                <h1>Welcome to Baġlib</h1>
+                <p>Your personalized reading journey starts here.</p>
+                <a href="{% url 'dashboard' %}" class="cta-button">Get Started</a>
+            </section>
+            
+            <section class="about">
+                <h2>About Baġlib</h2>
+                <p>Baġlib is an interactive platform designed for book lovers to track, share, and immerse in a personalized reading experience. Whether you're organizing your digital bookshelf or maintaining your reading streaks, Baġlib has you covered.</p>
+            </section>
 
-        <section class="features" style="background: url('{% static 'images/hero-background.jpg' %}') no-repeat center center/cover;">
-            <h2>Features</h2>
-            <div class="feature">
-                <h3>Track Your Books</h3>
-                <p>Organize books into folders, track progress, and view detailed stats.</p>
-            </div>
-            <div class="feature">
-                <h3>Share with the Community</h3>
-                <p>Engage with other readers by sharing your public folders and profiles.</p>
-            </div>
-            <div class="feature">
-                <h3>Maintain Reading Streaks</h3>
-                <p>Stay motivated with personal and folder-specific reading streaks.</p>
-            </div>
-        </section>
+            <section class="features" style="background: url('{% static 'images/hero-background.jpg' %}') no-repeat center center/cover;">
+                <h2>Features</h2>
+                <div class="feature">
+                    <h3>Track Your Books</h3>
+                    <p>Organize books into folders, track progress, and view detailed stats.</p>
+                </div>
+                <div class="feature">
+                    <h3>Share with the Community</h3>
+                    <p>Engage with other readers by sharing your public folders and profiles.</p>
+                </div>
+                <div class="feature">
+                    <h3>Maintain Reading Streaks</h3>
+                    <p>Stay motivated with personal and folder-specific reading streaks.</p>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>
