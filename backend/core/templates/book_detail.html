@@ -8,7 +8,7 @@
 <h2>{{ book.title }}</h2>
 
 {% if book.cover %}
-    <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+    <img src="{{ book.cover.url }}" alt="{{ book.title }}" top="100%" width="40%" height="100%"  border="3px solid #73AD21" position="absolute">
 {% else %}
     <img src="{% static 'images/default_cover.jpg' %}" alt="Default Cover" style="width: 200px; height: auto;">
 {% endif %}
