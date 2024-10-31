@@ -1,4 +1,4 @@
-/* General styles */
+/* Homepage */
 body {
     font-family: Arial, sans-serif;
     color: #333;
@@ -137,4 +137,6 @@ footer {
     text-align: center;
     padding: 10px;
     font-size: 0.9em;
+    width: 100%;
+    position: relative;
 }
