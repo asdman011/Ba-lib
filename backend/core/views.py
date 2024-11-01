@@ -172,8 +172,14 @@ def update_reading_progress(request, book_id):
     if book.folder.user != request.user:
         raise PermissionDenied("You do not have permission to update this book's progress.")
 
-    # Proceed with updating the reading progress only if the user is the owner
-    pages_read = int(request.POST.get('pages_read', 0))
+    # Retrieve pages_read from POST data and handle cases where it might be empty or invalid
+    try:
+        pages_read = int(request.POST.get('pages_read', 0))
+    except ValueError:
+        # If pages_read is invalid, set it to 0
+        pages_read = 0
+
+    # Update the current page and check if the book is finished
     book.current_page += pages_read
     if book.current_page >= book.total_pages:
         book.current_page = book.total_pages
@@ -195,7 +201,6 @@ def update_reading_progress(request, book_id):
     progress.update_general_streak()
 
     return redirect('dashboard')
-
 
 @login_required
 def get_reading_progress(request, book_id):
