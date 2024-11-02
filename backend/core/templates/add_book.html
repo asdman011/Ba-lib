@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+<h2>Add a New Book</h2>
+
+{% if form %}
+    <!-- Show the form if there are folders to choose from -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Book</button>
+    </form>
+{% else %}
+    <!-- Display message and link if no folders are available -->
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% else %}
+        <p>You need to create a folder before adding a book.</p>
+    {% endif %}
+    <a href="{% url 'create_folder' %}">Create a New Folder</a>
+{% endif %}
+
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}

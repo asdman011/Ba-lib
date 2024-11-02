@@ -1,0 +1,16 @@
+<!-- backend/core/templates/book_list.html -->
+ <title>Books</title>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/folders_books_profiles.css' %}">
+
+<h2>My Books</h2>
+<ul>
+    {% for book in books %}
+        <li><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a> by {{ book.author }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'add_book' %}">Add a New Book</a>  <!-- Button to add a book -->
+{% endblock %}
