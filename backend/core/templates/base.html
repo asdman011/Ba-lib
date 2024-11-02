@@ -1,0 +1,33 @@
+<!-- backend/core/templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baġlib</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}"> <!-- Add this line for React CSS -->
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="/">Home</a> <!-- Add this line for React homepage -->
+            <a href="/dashboard">Dashboard</a>
+            <a href="/folders">Folders</a>
+            <a href="/books">Books</a>
+            <a href="/profile">Profile</a>
+            <a href="/accounts/email">My Account</a>  <!-- for all other pages it work fine except from homepage -->
+            
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2023 My Site</p>
+    </footer>
+</body>
+</html>

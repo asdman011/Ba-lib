@@ -1,0 +1,11 @@
+<!-- backend/core/templates/edit_book.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Book: {{ form.instance.title }}</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+{% endblock %}
